@@ -1,0 +1,12 @@
+{
+  "name": "featuretrack-demo-store",
+  "version": "1.0.0",
+  "private": true,
+  "type": "module",
+  "description": "Example commerce app that integrates FeatureTrack via the SDK and generates realistic user journeys",
+  "scripts": {
+    "simulate": "node simulate.js",
+    "live": "node simulate.js --live"
+  },
+  "dependencies": { "@featuretrack/sdk": "1.0.0" }
+}
