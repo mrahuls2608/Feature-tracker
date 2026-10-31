@@ -31,7 +31,7 @@ export default function WebhooksPage() {
     <>
       <PageHeader title="Webhooks" description="Push events to your systems in real time, with signed payloads, retries and delivery logs." breadcrumbs={[{ label: project?.name }, { label: 'Webhooks' }]} actions={can('developer') && <Button icon={Plus} onClick={() => setOpen(true)}>Add endpoint</Button>} />
       <Card padded={false}>
-        {error ? <ErrorState error={error} onRetry={() => mutate()} /> : isLoading ? <div className="p-4"><LoadingBlock /></div> : (
+        {error ? <ErrorState error={error} onRetry={() => mutate()} /> : !data ? <div className="p-4"><LoadingBlock /></div> : (
           <Table
             onRowClick={(h) => router.push(`/webhooks/${h.id}`)}
             columns={[

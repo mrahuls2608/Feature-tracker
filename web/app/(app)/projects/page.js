@@ -109,7 +109,7 @@ function ProjectsInner() {
     <>
       <PageHeader title="Projects" description={`Projects in ${org?.name}. Each has isolated Development, Staging and Production data.`} breadcrumbs={[{ label: org?.name }, { label: 'Projects' }]} actions={canOrg('admin') && <Button icon={Plus} onClick={() => openModal(null)}>New project</Button>} />
       <div className="mb-4"><Segmented value={filter} onChange={setFilter} options={[{ id: 'active', label: 'Active' }, { id: 'archived', label: 'Archived' }, { id: 'all', label: 'All' }]} /></div>
-      {error ? <Card><ErrorState error={error} onRetry={() => mutate()} /></Card> : isLoading ? <LoadingBlock /> : !data.items.length ? (
+      {error ? <Card><ErrorState error={error} onRetry={() => mutate()} /></Card> : !data ? <LoadingBlock /> : !data.items.length ? (
         <Card><EmptyState icon={FolderKanban} title={filter === 'archived' ? 'No archived projects' : 'No projects yet'} action={canOrg('admin') && filter !== 'archived' && <Button icon={Plus} onClick={() => openModal(null)}>Create project</Button>} /></Card>
       ) : (
         <div className="grid gap-4 md:grid-cols-2 xl:grid-cols-3">

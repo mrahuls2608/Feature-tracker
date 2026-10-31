@@ -1,6 +1,6 @@
 'use client';
 import { useState } from 'react';
-import useSWR from 'swr';
+import useSWR, { mutate as globalMutate } from 'swr';
 import { useRouter } from 'next/navigation';
 import { AuthLayout } from '@/components/AuthLayout';
 import { Button, Field, Input, Textarea, Callout, Badge } from '@/components/ui';
@@ -37,6 +37,7 @@ export default function Onboarding() {
     try {
       const p = await api(`/orgs/${org.id}/projects`, { method: 'POST', body: { name: form.projectName, description: form.description } });
       localStorage.setItem(`ft_project:${org.id}`, p.id);
+      await globalMutate('/auth/me');
       router.replace('/docs?welcome=1');
     } catch (err) {
       setError(err.details?.map((d) => d.message).join('. ') || err.message);
@@ -45,6 +46,7 @@ export default function Onboarding() {
   }
   async function accept(id) {
     await api(`/invitations/${id}/accept`, { method: 'POST' });
+    await globalMutate('/auth/me');
     router.replace('/dashboard');
   }
 

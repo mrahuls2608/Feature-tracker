@@ -27,7 +27,7 @@ export default function UsersPage() {
           <div className="relative min-w-[240px] flex-1"><Search className="absolute left-3 top-2.5 h-4 w-4 text-subtle" /><Input className="pl-9" placeholder="Search by user ID, email or name…" value={q} onChange={(e) => setQ(e.target.value)} /></div>
           <Select value={sort} onChange={(e) => setSort(e.target.value)} className="w-48"><option value="lastSeenAt">Recently active</option><option value="firstSeenAt">Newest</option><option value="eventCount">Most events</option></Select>
         </div>
-        {error ? <ErrorState error={error} onRetry={() => mutate()} /> : isLoading && !data ? <div className="p-4"><LoadingBlock rows={8} /></div> : (
+        {error ? <ErrorState error={error} onRetry={() => mutate()} /> : !data ? <div className="p-4"><LoadingBlock rows={8} /></div> : (
           <>
             <Table
               onRowClick={(u) => router.push(`/users/${encodeURIComponent(u.distinctId)}`)}

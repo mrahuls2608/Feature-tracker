@@ -58,7 +58,7 @@ function Trends() {
         <div className="mt-4 border-t border-line pt-4"><FilterBar value={filters} onChange={setFilters} /></div>
       </Card>
       <Card title={metric === 'unique' ? 'Unique users' : 'Event volume'} description={breakdown && events.length <= 1 ? `Broken down by ${breakdown} (top 8)` : 'Over the selected range'}>
-        {error ? <ErrorState error={error} onRetry={() => mutate()} /> : isLoading && !data ? <Skeleton className="h-[320px]" /> : <TimeChart data={data.points} series={series} xKey="bucket" type={type} height={320} />}
+        {error ? <ErrorState error={error} onRetry={() => mutate()} /> : !data ? <Skeleton className="h-[320px]" /> : <TimeChart data={data.points} series={series} xKey="bucket" type={type} height={320} />}
       </Card>
       {data && (
         <Card title="Totals" padded={false}>
@@ -88,10 +88,10 @@ function Engagement() {
         <StatCard loading={isLoading} label="Stickiness (DAU/MAU)" value={data ? fmtPct(data.stickiness) : undefined} />
         <StatCard loading={isLoading} label="Avg events / user" value={data?.avgEventsPerUser} />
       </div>
-      <Card title="Daily active users">{isLoading && !data ? <Skeleton className="h-[240px]" /> : <TimeChart data={data.dailyActive} series={[{ key: 'users', label: 'Active users', color: 'var(--series-3)' }]} height={240} />}</Card>
+      <Card title="Daily active users">{!data ? <Skeleton className="h-[240px]" /> : <TimeChart data={data.dailyActive} series={[{ key: 'users', label: 'Active users', color: 'var(--series-3)' }]} height={240} />}</Card>
       <div className="grid gap-4 lg:grid-cols-2">
-        <Card title="Event frequency" description="Users by number of events in range">{isLoading && !data ? <Skeleton className="h-[220px]" /> : <TimeChart data={data.frequency} xKey="label" series={[{ key: 'users', label: 'Users' }]} type="bar" height={220} />}</Card>
-        <Card title="Active days" description="Users by distinct active days in range">{isLoading && !data ? <Skeleton className="h-[220px]" /> : <TimeChart data={data.activeDays} xKey="days" series={[{ key: 'users', label: 'Users', color: 'var(--series-7)' }]} type="bar" height={220} />}</Card>
+        <Card title="Event frequency" description="Users by number of events in range">{!data ? <Skeleton className="h-[220px]" /> : <TimeChart data={data.frequency} xKey="label" series={[{ key: 'users', label: 'Users' }]} type="bar" height={220} />}</Card>
+        <Card title="Active days" description="Users by distinct active days in range">{!data ? <Skeleton className="h-[220px]" /> : <TimeChart data={data.activeDays} xKey="days" series={[{ key: 'users', label: 'Users', color: 'var(--series-7)' }]} type="bar" height={220} />}</Card>
       </div>
       <Card title="Most engaged users" padded={false}>
         <Table
@@ -125,7 +125,7 @@ function Retention() {
         </div>
       </Card>
       <Card title="Retention cohorts" description="Users are grouped by when they first performed the cohort event within the range. Cells show the % that returned N periods later.">
-        {error ? <ErrorState error={error} onRetry={() => mutate()} /> : isLoading && !data ? <Skeleton className="h-[300px]" /> : data.cohorts.length ? <RetentionGrid cohorts={data.cohorts} average={data.average} period={data.period} /> : <EmptyState title="No cohort data" description="No users performed the cohort event in this range." />}
+        {error ? <ErrorState error={error} onRetry={() => mutate()} /> : !data ? <Skeleton className="h-[300px]" /> : data.cohorts.length ? <RetentionGrid cohorts={data.cohorts} average={data.average} period={data.period} /> : <EmptyState title="No cohort data" description="No users performed the cohort event in this range." />}
       </Card>
     </div>
   );

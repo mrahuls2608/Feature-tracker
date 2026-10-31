@@ -38,11 +38,11 @@ export default function EventDetail({ params }) {
             <StatCard loading={isLoading} label="All-time total" value={data?.allTimeTotal} sub={def ? <Badge color={def.status === 'active' ? 'green' : 'blue'}>{def.status}</Badge> : 'Not defined'} />
           </div>
           <Card title="Activity" description="Events and unique users per day">
-            {isLoading && !data ? <Skeleton className="h-[280px]" /> : <TimeChart data={data.series} series={[{ key: 'count', label: 'Events' }, { key: 'users', label: 'Unique users', color: 'var(--series-3)' }]} type="line" height={280} />}
+            {!data ? <Skeleton className="h-[280px]" /> : <TimeChart data={data.series} series={[{ key: 'count', label: 'Events' }, { key: 'users', label: 'Unique users', color: 'var(--series-3)' }]} type="line" height={280} />}
           </Card>
           <div className="grid gap-6 lg:grid-cols-2">
             <Card title="Properties" description="Observed in the most recent 500 events" padded={false}>
-              {isLoading && !data ? <div className="p-5"><Skeleton className="h-40" /></div> : (
+              {!data ? <div className="p-5"><Skeleton className="h-40" /></div> : (
                 <Table
                   rowKey={(p) => p.name}
                   columns={[
@@ -57,7 +57,7 @@ export default function EventDetail({ params }) {
               )}
             </Card>
             <Card title="Recent occurrences" padded={false}>
-              {isLoading && !data ? <div className="p-5"><Skeleton className="h-40" /></div> : (
+              {!data ? <div className="p-5"><Skeleton className="h-40" /></div> : (
                 <Table
                   onRowClick={(e) => setSelected({ ...e, name, environment: env?.id })}
                   columns={[

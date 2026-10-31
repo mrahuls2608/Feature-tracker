@@ -83,7 +83,7 @@ export default function Explorer() {
   return (
     <>
       <PageHeader title="API explorer" description="Browse endpoints and execute real requests against this FeatureTrack instance." breadcrumbs={[{ label: project?.name || 'Developers' }, { label: 'API explorer' }]} />
-      {error ? <Card><ErrorState error={error} onRetry={() => mutate()} /></Card> : isLoading ? <LoadingBlock rows={6} /> : (
+      {error ? <Card><ErrorState error={error} onRetry={() => mutate()} /></Card> : !data ? <LoadingBlock rows={6} /> : (
         <div className="grid gap-6 lg:grid-cols-[280px_1fr]">
           <Card padded={false} className="h-fit lg:sticky lg:top-0">
             <nav className="max-h-[75vh] overflow-y-auto p-2" aria-label="Endpoints">

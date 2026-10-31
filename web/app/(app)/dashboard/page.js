@@ -63,16 +63,16 @@ export default function Dashboard() {
               description={chartMetric === 'events' ? 'Events per day' : 'Distinct users per day'}
               actions={<Segmented value={chartMetric} onChange={setChartMetric} options={[{ id: 'events', label: 'Events' }, { id: 'users', label: 'Users' }]} />}
             >
-              {isLoading && !data ? <Skeleton className="h-[260px] w-full" /> : <TimeChart data={data?.series || []} series={[{ key: chartMetric, label: chartMetric === 'events' ? 'Events' : 'Unique users', color: chartMetric === 'events' ? 'var(--series-1)' : 'var(--series-3)' }]} />}
+              {!data ? <Skeleton className="h-[260px] w-full" /> : <TimeChart data={data?.series || []} series={[{ key: chartMetric, label: chartMetric === 'events' ? 'Events' : 'Unique users', color: chartMetric === 'events' ? 'var(--series-1)' : 'var(--series-3)' }]} />}
             </Card>
             <Card title="Top events" description="By volume in range" actions={<Link href="/events" className="text-xs text-brand-500 hover:underline">View all</Link>}>
-              {isLoading && !data ? <LoadingBlock rows={6} /> : data?.topEvents?.length ? <BarList items={data.topEvents.slice(0, 8)} hrefFor={(e) => `/events/${encodeURIComponent(e.name)}`} secondary={(e) => `${fmtNum(e.users)} users`} /> : <EmptyState title="No events yet" description="Top events appear once data arrives." />}
+              {!data ? <LoadingBlock rows={6} /> : data?.topEvents?.length ? <BarList items={data.topEvents.slice(0, 8)} hrefFor={(e) => `/events/${encodeURIComponent(e.name)}`} secondary={(e) => `${fmtNum(e.users)} users`} /> : <EmptyState title="No events yet" description="Top events appear once data arrives." />}
             </Card>
           </div>
 
           <div className="mt-6 grid gap-6 xl:grid-cols-3">
             <Card title="Top features" description="Adoption among exposed users" actions={<Link href="/features" className="text-xs text-brand-500 hover:underline">All features</Link>}>
-              {isLoading && !data ? <LoadingBlock rows={4} /> : data?.topFeatures?.length ? (
+              {!data ? <LoadingBlock rows={4} /> : data?.topFeatures?.length ? (
                 <ul className="space-y-4">
                   {data.topFeatures.map((f) => (
                     <li key={f.id}>
@@ -87,10 +87,10 @@ export default function Dashboard() {
               ) : <EmptyState icon={Rocket} title="No active features" description="Define features to measure exposure and adoption." action={<Button size="sm" variant="secondary" href="/features">Create feature</Button>} />}
             </Card>
             <Card title="Unique user trend" description="Daily active users">
-              {isLoading && !data ? <Skeleton className="h-[200px] w-full" /> : <TimeChart data={data?.series || []} series={[{ key: 'users', label: 'Users', color: 'var(--series-3)' }]} type="bar" height={200} />}
+              {!data ? <Skeleton className="h-[200px] w-full" /> : <TimeChart data={data?.series || []} series={[{ key: 'users', label: 'Users', color: 'var(--series-3)' }]} type="bar" height={200} />}
             </Card>
             <Card title="Recent activity" description="Latest events" actions={<Link href="/live" className="text-xs text-brand-500 hover:underline">Live view</Link>} padded={false}>
-              {isLoading && !data ? <div className="p-5"><LoadingBlock rows={5} /></div> : data?.recent?.length ? (
+              {!data ? <div className="p-5"><LoadingBlock rows={5} /></div> : data?.recent?.length ? (
                 <ul className="divide-y divide-line">
                   {data.recent.slice(0, 8).map((e) => (
                     <li key={e.id} className="flex items-center justify-between gap-3 px-5 py-2.5">

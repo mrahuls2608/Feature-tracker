@@ -31,7 +31,7 @@ export default function FeaturesPage() {
           <div className="relative min-w-[220px] flex-1"><Search className="absolute left-3 top-2.5 h-4 w-4 text-subtle" /><Input className="pl-9" placeholder="Search features…" value={q} onChange={(e) => setQ(e.target.value)} /></div>
           <Select value={status} onChange={(e) => setStatus(e.target.value)} className="w-40"><option value="">All statuses</option>{['planned', 'beta', 'live', 'deprecated'].map((s) => <option key={s}>{s}</option>)}</Select>
         </div>
-        {error ? <ErrorState error={error} onRetry={() => mutate()} /> : isLoading && !data ? <div className="p-4"><LoadingBlock rows={5} /></div> : (
+        {error ? <ErrorState error={error} onRetry={() => mutate()} /> : !data ? <div className="p-4"><LoadingBlock rows={5} /></div> : (
           <Table
             onRowClick={(f) => router.push(`/features/${f.id}`)}
             columns={[

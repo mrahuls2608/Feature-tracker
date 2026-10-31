@@ -109,13 +109,15 @@ export function FunnelChart({ steps }) {
             </div>
             <div className="mt-2 w-full text-center">
               <p className="truncate text-xs font-medium" title={s.label}>{i + 1}. {s.label}</p>
-              {i > 0 && (
-                <p className="mt-0.5 text-[11px]">
-                  <span className="text-[#087a08] dark:text-[#4cc94c]">{s.conversionFromPrevious}%</span>
-                  <span className="text-subtle"> · </span>
-                  <span className="text-[#b4302f] dark:text-[#f08080]">−{fmtNum(s.dropOff)}</span>
-                </p>
-              )}
+              <p className="mt-0.5 h-4 text-[11px]">
+                {i > 0 ? (
+                  <>
+                    <span className="text-[#087a08] dark:text-[#4cc94c]">{s.conversionFromPrevious}%</span>
+                    <span className="text-subtle"> · </span>
+                    <span className="text-[#b4302f] dark:text-[#f08080]">−{fmtNum(s.dropOff)}</span>
+                  </>
+                ) : <span className="text-subtle">entry</span>}
+              </p>
             </div>
           </div>
         );

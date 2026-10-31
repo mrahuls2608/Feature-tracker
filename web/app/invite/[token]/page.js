@@ -24,6 +24,7 @@ export default function InvitePage({ params }) {
       if (action === 'accept') {
         localStorage.setItem('ft_org', invite.data.organization.id);
         toast(`You joined ${invite.data.organization.name}`);
+        await me.mutate();
         router.replace('/dashboard');
       } else {
         toast('Invitation declined');

@@ -1,10 +1,17 @@
 'use client';
+import { useEffect } from 'react';
 import Link from 'next/link';
 import { X } from 'lucide-react';
 import { JsonView, KeyValue, Badge, CopyButton } from './ui';
 import { fmtDateTime } from '@/lib/format';
 
 export function EventDrawer({ event, onClose, envName }) {
+  useEffect(() => {
+    if (!event) return;
+    const onKey = (e) => e.key === 'Escape' && onClose();
+    document.addEventListener('keydown', onKey);
+    return () => document.removeEventListener('keydown', onKey);
+  }, [event, onClose]);
   if (!event) return null;
   return (
     <div className="fixed inset-0 z-50 flex justify-end" role="dialog" aria-modal="true" aria-label="Event details">

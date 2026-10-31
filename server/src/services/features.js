@@ -50,7 +50,7 @@ export async function featureDetail(envId, range, feature) {
       { $match: { ...base, $or: [...exposureMatch(feature), ...adoptionMatch(feature), ...(feature.conversionEvent ? [{ name: feature.conversionEvent }] : [])] } },
       { $group: { _id: { n: '$name', u: '$distinctId' }, c: { $sum: 1 } } },
       { $group: { _id: '$_id.n', count: { $sum: '$c' }, users: { $sum: 1 } } },
-      { $sort: { count: -1 } },
+      { $sort: { count: -1, _id: 1 } },
     ]),
   ]);
   const toMap = (rows) => Object.fromEntries(rows.map((r) => [new Date(r._id).toISOString().slice(0, 10), r.users]));

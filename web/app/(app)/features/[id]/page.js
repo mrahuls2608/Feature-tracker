@@ -130,7 +130,7 @@ export default function FeatureDetail({ params }) {
         breadcrumbs={[{ label: project?.name }, { label: 'Features', href: '/features' }, { label: f?.name || '…' }]}
         actions={<>{can('developer') && <><Button variant="secondary" icon={Pencil} onClick={() => setEdit(true)}>Edit</Button><Button variant="danger-ghost" icon={Trash2} onClick={() => setDel(true)}>Delete</Button></>}<DateRangePicker /></>}
       />
-      {isLoading && !f ? <Skeleton className="h-96" /> : (
+      {!f ? <Skeleton className="h-96" /> : (
         <div className="space-y-6">
           <div className="grid grid-cols-2 gap-3 md:grid-cols-4">
             <StatCard label="Status" value={<Badge color={FEATURE_STATUS_COLOR[f.status]} className="text-sm">{f.status}</Badge>} sub={<span className="font-mono">{f.key}</span>} />
@@ -139,7 +139,9 @@ export default function FeatureDetail({ params }) {
             <StatCard label="Adoption rate" value={fmtPct(m.adoptionRate)} hint="Adopted ÷ exposed" />
           </div>
           <Card title="Usage trend" description={`Daily unique users exposed vs adopted · ${env?.name}`}>
-            <TimeChart data={m.trend} series={[{ key: 'exposed', label: 'Exposed' }, { key: 'adopted', label: 'Adopted', color: 'var(--series-3)' }]} type="line" />
+            {m.exposedUsers === 0 ? (
+              <EmptyState title="No exposure recorded in this range" description={<>Send <code className="font-mono">$feature_exposed</code> / <code className="font-mono">$feature_used</code> events with <code className="font-mono">feature: "{f.key}"</code>, or add exposure/adoption events to this feature.</>} action={can('developer') && <Button size="sm" variant="secondary" onClick={() => setEdit(true)}>Configure events</Button>} />
+            ) : <TimeChart data={m.trend} series={[{ key: 'exposed', label: 'Exposed' }, { key: 'adopted', label: 'Adopted', color: 'var(--series-3)' }]} type="line" />}
           </Card>
           <div className="grid gap-6 lg:grid-cols-2">
             <Card title="Conversion comparison" description={f.conversionEvent ? <>Share of users who performed <code className="font-mono">{f.conversionEvent}</code></> : 'Set a conversion event to compare adopters with non-adopters'}>

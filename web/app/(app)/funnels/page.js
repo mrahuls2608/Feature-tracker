@@ -16,7 +16,7 @@ export default function FunnelsPage() {
   return (
     <>
       <PageHeader title="Funnels" description="Measure step-by-step conversion and find where users drop off." breadcrumbs={[{ label: project?.name }, { label: 'Funnels' }]} actions={can('developer') && <Button icon={Plus} onClick={() => setOpen(true)}>New funnel</Button>} />
-      {error ? <Card><ErrorState error={error} onRetry={() => mutate()} /></Card> : isLoading ? <LoadingBlock rows={4} /> : !data.items.length ? (
+      {error ? <Card><ErrorState error={error} onRetry={() => mutate()} /></Card> : !data ? <LoadingBlock rows={4} /> : !data.items.length ? (
         <Card><EmptyState icon={Filter} title="No funnels yet" description="Create a funnel like Signed up → Viewed product → Started checkout → Paid." action={can('developer') && <Button icon={Plus} onClick={() => setOpen(true)}>Create funnel</Button>} /></Card>
       ) : (
         <div className="grid gap-4 md:grid-cols-2 xl:grid-cols-3">

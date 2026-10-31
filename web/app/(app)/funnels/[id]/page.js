@@ -55,7 +55,7 @@ export default function FunnelDetail({ params }) {
         </div>
         {r?.biggestDropOff && <Callout tone="warning" title={`Biggest drop-off: step ${r.biggestDropOff.step + 1} — ${r.biggestDropOff.label}`}>{fmtNum(r.biggestDropOff.users)} users ({r.biggestDropOff.rate}%) left before completing this step.</Callout>}
         <Card title="Conversion by step">
-          {isLoading && !data ? <Skeleton className="h-[300px]" /> : r.entered === 0 ? <EmptyState icon={TrendingDown} title="No users entered this funnel" description="No one performed the first step in the selected range and environment." /> : <FunnelChart steps={r.steps} />}
+          {!data ? <Skeleton className="h-[300px]" /> : r.entered === 0 ? <EmptyState icon={TrendingDown} title="No users entered this funnel" description="No one performed the first step in the selected range and environment." /> : <FunnelChart steps={r.steps} />}
         </Card>
         {r && (
           <Card title="Step details" padded={false}>

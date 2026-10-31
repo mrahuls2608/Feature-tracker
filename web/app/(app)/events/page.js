@@ -29,7 +29,7 @@ function Definitions() {
           <Select value={status} onChange={(e) => setStatus(e.target.value)} className="w-40"><option value="">All statuses</option><option value="active">Active</option><option value="discovered">Discovered</option><option value="deprecated">Deprecated</option></Select>
           {can('developer') && <Button icon={Plus} onClick={() => setModal(true)}>Define event</Button>}
         </div>
-        {error ? <ErrorState error={error} onRetry={() => mutate()} /> : isLoading && !data ? <div className="p-4"><LoadingBlock rows={6} /></div> : (
+        {error ? <ErrorState error={error} onRetry={() => mutate()} /> : !data ? <div className="p-4"><LoadingBlock rows={6} /></div> : (
           <Table
             columns={[
               { key: 'name', label: 'Event', render: (d) => <Link href={`/events/${encodeURIComponent(d.name)}`} className="group"><span className="font-mono text-[13px] font-medium group-hover:text-brand-500">{d.name}</span>{(d.displayName || d.description) && <span className="mt-0.5 block max-w-md truncate text-xs text-subtle">{d.displayName ? `${d.displayName} — ` : ''}{d.description}</span>}</Link> },
@@ -68,7 +68,7 @@ function History() {
         </div>
         <FilterBar value={filters} onChange={setFilters} event={name || undefined} />
       </div>
-      {error ? <ErrorState error={error} onRetry={() => mutate()} /> : isLoading && !data ? <div className="p-4"><LoadingBlock rows={8} /></div> : (
+      {error ? <ErrorState error={error} onRetry={() => mutate()} /> : !data ? <div className="p-4"><LoadingBlock rows={8} /></div> : (
         <>
           <Table
             onRowClick={setSelected}

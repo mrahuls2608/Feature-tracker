@@ -154,7 +154,7 @@ export async function overview(envId, projectId, range, { filters = [] } = {}) {
       { $match: baseMatch(envId, range, { filters }) },
       { $group: { _id: { n: '$name', u: '$distinctId' }, c: { $sum: 1 } } },
       { $group: { _id: '$_id.n', count: { $sum: '$c' }, users: { $sum: 1 } } },
-      { $sort: { count: -1 } },
+      { $sort: { count: -1, _id: 1 } },
       { $limit: 10 },
     ]).allowDiskUse(true),
     Event.find(baseMatch(envId, { from: new Date(0), to: now }, { filters })).sort({ timestamp: -1 }).limit(10).lean(),

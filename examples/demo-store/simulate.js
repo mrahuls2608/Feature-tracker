@@ -88,15 +88,17 @@ async function journey(userIndex, start, { live = false } = {}) {
     step(2);
     const cartValue = product.price * qty;
     if (newCheckout) ft.featureExposed('new-checkout', { variant: 'v2' }, opts());
-    ft.track('checkout_started', { cart_value: cartValue, items: qty, checkout_version: newCheckout ? 'v2' : 'v1' }, opts());
+    // Some exposed users go back to the classic flow; the rest use (adopt) the new checkout.
+    const adopts = newCheckout && chance(0.8);
+    if (adopts) ft.featureUsed('new-checkout', { variant: 'v2', one_click: chance(0.4) }, opts());
+    ft.track('checkout_started', { cart_value: cartValue, items: qty, checkout_version: adopts ? 'v2' : 'v1' }, opts());
     // The new checkout converts noticeably better — visible in feature conversion comparison.
-    const payRate = newCheckout ? 0.72 : 0.48;
+    const payRate = adopts ? 0.72 : 0.48;
     if (!chance(payRate)) {
       if (chance(0.3)) ft.track('checkout_abandoned', { step: pick(['shipping', 'payment', 'review']), cart_value: cartValue }, opts());
       continue;
     }
     step(3);
-    if (newCheckout) ft.featureUsed('new-checkout', { variant: 'v2', one_click: chance(0.4) }, opts());
     ft.track('payment_completed', { amount: cartValue, currency: 'USD', method: pick(['card', 'card', 'paypal', 'apple_pay']), plan }, opts());
     if (plan !== 'free' && chance(0.04)) {
       step(60 * 24);

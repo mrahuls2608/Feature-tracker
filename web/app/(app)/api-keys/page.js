@@ -68,7 +68,7 @@ export default function ApiKeysPage() {
       <PageHeader title="API keys" description="Each key authenticates ingestion for exactly one environment." breadcrumbs={[{ label: project?.name }, { label: 'API keys' }]} actions={can('developer') && !project?.archived && <Button icon={Plus} onClick={() => setCreate(true)}>Create key</Button>} />
       <Card padded={false} className="mb-6">
         <div className="border-b border-line p-3"><Segmented value={filter} onChange={setFilter} options={[{ id: 'all', label: 'All environments' }, ...environments.map((e) => ({ id: e.id, label: e.name }))]} /></div>
-        {error ? <ErrorState error={error} onRetry={() => mutate()} /> : isLoading && !data ? <div className="p-4"><LoadingBlock /></div> : (
+        {error ? <ErrorState error={error} onRetry={() => mutate()} /> : !data ? <div className="p-4"><LoadingBlock /></div> : (
           <Table
             columns={[
               { key: 'name', label: 'Name', render: (k) => <span className="font-medium">{k.name}</span> },

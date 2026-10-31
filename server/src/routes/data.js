@@ -210,7 +210,7 @@ r.get('/:projectId/users/:distinctId', ...viewer, ah(async (req, res) => {
   const match = { environment: req.env._id, distinctId: profile.distinctId };
   const [recent, topEvents, timeline, features] = await Promise.all([
     Event.find(match).sort({ timestamp: -1 }).limit(50).lean(),
-    Event.aggregate([{ $match: match }, { $group: { _id: '$name', count: { $sum: 1 }, last: { $max: '$timestamp' } } }, { $sort: { count: -1 } }, { $limit: 15 }]),
+    Event.aggregate([{ $match: match }, { $group: { _id: '$name', count: { $sum: 1 }, last: { $max: '$timestamp' } } }, { $sort: { count: -1, _id: 1 } }, { $limit: 15 }]),
     Event.aggregate([{ $match: { ...match, timestamp: { $gte: new Date(Date.now() - 90 * 86400_000) } } }, { $group: { _id: { $dateTrunc: { date: '$timestamp', unit: 'day' } }, count: { $sum: 1 } } }, { $sort: { _id: 1 } }]),
     Feature.find({ project: req.project._id }).lean(),
   ]);

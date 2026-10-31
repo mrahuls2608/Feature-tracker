@@ -36,7 +36,7 @@ export default function UserDetail({ params }) {
   return (
     <>
       <PageHeader title={u?.traits?.name || distinctId} description={u?.traits?.email || `User ${distinctId}`} breadcrumbs={[{ label: project?.name }, { label: 'Users', href: '/users' }, { label: distinctId }]} actions={can('admin') && u && <Button variant="danger-ghost" icon={Trash2} onClick={() => setDel(true)}>Delete user data</Button>} />
-      {error ? <Card><ErrorState error={error} onRetry={() => mutate()} /></Card> : isLoading && !u ? <Skeleton className="h-96" /> : (
+      {error ? <Card><ErrorState error={error} onRetry={() => mutate()} /></Card> : !u ? <Skeleton className="h-96" /> : (
         <div className="space-y-6">
           <div className="grid grid-cols-2 gap-3 md:grid-cols-4">
             <StatCard label="Total events" value={u.eventCount} />

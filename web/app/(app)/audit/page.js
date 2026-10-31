@@ -34,7 +34,7 @@ export default function AuditPage() {
           <Select value={action} onChange={(e) => setAction(e.target.value)} className="w-48"><option value="">All actions</option>{GROUPS.map((g) => <option key={g} value={g}>{g.replace('_', ' ')}</option>)}</Select>
           <Select value={projectId} onChange={(e) => setProjectId(e.target.value)} className="w-48"><option value="">All projects</option>{projectList.map((p) => <option key={p.id} value={p.id}>{p.name}</option>)}</Select>
         </div>
-        {error ? <ErrorState error={error} onRetry={() => mutate()} /> : isLoading && !data ? <div className="p-4"><LoadingBlock rows={8} /></div> : (
+        {error ? <ErrorState error={error} onRetry={() => mutate()} /> : !data ? <div className="p-4"><LoadingBlock rows={8} /></div> : (
           <>
             <Table
               onRowClick={setSelected}
