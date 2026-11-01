@@ -1,0 +1,17 @@
+{
+  "name": "featuretrack",
+  "private": true,
+  "version": "1.0.0",
+  "description": "FeatureTrack — product analytics, event tracking and feature adoption platform",
+  "workspaces": ["server", "web", "sdk", "examples/demo-store"],
+  "scripts": {
+    "dev:api": "npm run dev -w server",
+    "dev:web": "npm run dev -w web",
+    "worker": "npm run worker -w server",
+    "seed": "npm run seed -w server",
+    "simulate": "npm run simulate -w examples/demo-store",
+    "test": "npm test -w server && npm test -w sdk",
+    "build:web": "npm run build -w web"
+  },
+  "engines": { "node": ">=20" }
+}
