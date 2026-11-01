@@ -8,5 +8,9 @@
     "simulate": "node simulate.js",
     "live": "node simulate.js --live"
   },
-  "dependencies": { "@featuretrack/sdk": "1.0.0" }
+  "dependencies": {
+    "@featuretrack/sdk": "1.0.0"
+  },
+  "license": "UNLICENSED",
+  "author": "M N Santhi Swarup"
 }

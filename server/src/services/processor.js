@@ -93,6 +93,8 @@ export async function processEventBatch({ orgId, projectId, envId, apiKeyId, eve
     name: d.name,
     distinctId: d.distinctId,
     properties: d.properties,
+    context: d.context,
+    messageId: d.messageId,
     timestamp: d.timestamp,
     receivedAt: d.receivedAt,
     environment: envId,

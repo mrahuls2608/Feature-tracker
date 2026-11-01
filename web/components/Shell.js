@@ -140,8 +140,8 @@ function ProjectSwitcher() {
     <Menu
       align="left"
       trigger={({ toggle }) => (
-        <button onClick={toggle} className="flex max-w-[220px] items-center gap-1.5 rounded-lg px-2 py-1.5 text-sm font-medium hover:bg-surface" aria-label="Switch project">
-          <FolderKanban className="h-4 w-4 shrink-0 text-subtle" />
+        <button onClick={toggle} className="flex max-w-[110px] items-center gap-1.5 rounded-lg px-1.5 py-1.5 text-sm font-medium hover:bg-surface sm:max-w-[220px] sm:px-2" aria-label="Switch project">
+          <FolderKanban className="hidden h-4 w-4 shrink-0 text-subtle sm:block" />
           <span className="truncate">{project?.name || 'Select project'}</span>
           <ChevronDown className="h-3.5 w-3.5 shrink-0 text-subtle" />
         </button>
@@ -162,10 +162,10 @@ function EnvSelector() {
   return (
     <div className="inline-flex rounded-lg border border-line bg-surface p-0.5" role="radiogroup" aria-label="Environment">
       {environments.map((e) => (
-        <button key={e.id} role="radio" aria-checked={env?.id === e.id} onClick={() => setEnvId(e.id)} className={cx('flex items-center gap-1.5 rounded-md px-2 py-1 text-xs font-medium transition-colors', env?.id === e.id ? 'bg-panel text-ink shadow-sm' : 'text-subtle hover:text-ink')}>
+        <button key={e.id} role="radio" aria-checked={env?.id === e.id} onClick={() => setEnvId(e.id)} className={cx('flex items-center gap-1 rounded-md px-1.5 py-1 text-xs font-medium transition-colors sm:gap-1.5 sm:px-2', env?.id === e.id ? 'bg-panel text-ink shadow-sm' : 'text-subtle hover:text-ink')}>
           <span className="h-1.5 w-1.5 rounded-full" style={{ background: e.color }} />
           <span className="hidden md:inline">{e.name}</span>
-          <span className="md:hidden">{e.type.slice(0, 3)}</span>
+          <span className="md:hidden">{{ development: 'Dev', staging: 'Stg', production: 'Prod' }[e.type]}</span>
         </button>
       ))}
     </div>
@@ -277,12 +277,12 @@ export function AppShell({ children }) {
         </div>
       )}
       <div className="flex min-w-0 flex-1 flex-col">
-        <header className="flex h-14 shrink-0 items-center gap-2 border-b border-line bg-panel/80 px-3 backdrop-blur sm:px-5">
+        <header className="flex h-14 shrink-0 items-center gap-1 border-b border-line bg-panel/80 px-2 backdrop-blur sm:gap-2 sm:px-5">
           <button className="rounded-md p-1.5 text-subtle lg:hidden" onClick={() => setMobileNav(true)} aria-label="Open navigation"><MenuIcon className="h-5 w-5" /></button>
           <ProjectSwitcher />
           {ws.project?.archived && <span className="rounded bg-[#fab219]/20 px-1.5 py-0.5 text-[11px] font-medium text-[#8a5d00] dark:text-[#fab219]">Archived</span>}
-          <div className="ml-1"><EnvSelector /></div>
-          <div className="ml-auto flex items-center gap-1.5">
+          <div className="sm:ml-1"><EnvSelector /></div>
+          <div className="ml-auto flex shrink-0 items-center gap-0.5 sm:gap-1.5">
             <Notifications />
             <UserMenu />
           </div>

@@ -51,7 +51,9 @@ export function createApp() {
   // CSRF defense for cookie-authenticated requests: state-changing calls must be JSON
   // (forms cannot send application/json cross-site without a CORS preflight).
   app.use('/api', (req, _res, next) => {
-    if (['POST', 'PUT', 'PATCH', 'DELETE'].includes(req.method) && req.headers['content-length'] !== '0' && req.body && Object.keys(req.body).length && !req.is('application/json')) {
+    // HTML forms always send a Content-Type (urlencoded / multipart / text/plain), so any declared
+    // non-JSON type on a state-changing request is refused — even when the body is empty.
+    if (['POST', 'PUT', 'PATCH', 'DELETE'].includes(req.method) && req.headers['content-type'] && !req.is('application/json')) {
       return next(forbidden('Content-Type must be application/json'));
     }
     next();

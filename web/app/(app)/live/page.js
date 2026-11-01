@@ -125,7 +125,7 @@ export default function LivePage() {
           <ul className="divide-y divide-line">
             {filtered.map((e) => (
               <li key={e.id}>
-                <button onClick={() => setSelected({ ...e, environment: env?.id })} className={cx('grid w-full grid-cols-12 items-center gap-3 px-4 py-2.5 text-left transition-colors hover:bg-surface/70', e.fresh && 'animate-fade-in')}>
+                <button onClick={() => { const { fresh, seeded, ...clean } = e; setSelected({ ...clean, environment: env?.id }); }} className={cx('grid w-full grid-cols-12 items-center gap-3 px-4 py-2.5 text-left transition-colors hover:bg-surface/70', e.fresh && 'animate-fade-in')}>
                   <span className="col-span-2 text-xs tabular-nums text-subtle sm:col-span-1">{fmtTime(e.timestamp)}</span>
                   <span className="col-span-5 flex items-center gap-2 truncate font-mono text-[13px] font-medium sm:col-span-3">
                     <span className="h-1.5 w-1.5 shrink-0 rounded-full" style={{ background: env?.color }} />{e.name}
